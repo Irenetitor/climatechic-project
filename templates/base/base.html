@@ -71,7 +71,7 @@ $(document).ready(function() {
 					<div class="widget-header icontext">
 						{% if user.is_authenticated %}
 							<a href="{% url 'profile' %}">
-								<img class="icon icon-sm rounded-circle border" src="{{ user.profile.image.url }}">						
+								<img class="icon icon-sm rounded-circle border" src="{{ user.customerprofile.image.url }}">						
 							</a>
 						{% else %}
 							<a href="#" class="icon icon-sm rounded-circle border">
