@@ -6,7 +6,6 @@ from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 
 from users.forms import ProfileUpdateForm, UserUpdateForm
-# Create your views here.
 
 def home(request):
     return render(request, 'base/base.html', {'title': 'Home'})
