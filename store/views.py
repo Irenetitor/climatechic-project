@@ -1,9 +1,10 @@
+import datetime
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from store.models import Order, OrderItem, Product
-from store.utils import cartData
+from store.models import Order, OrderItem, Product, ShippingAddress
+from store.utils import cartData, guestOrder
 
 # Create your views here.
 
@@ -24,7 +25,14 @@ def cart(request):
 	return render(request, 'store/cart.html', context)
 
 def checkout(request):
-	return render(request, 'store/checkout.html')
+	data = cartData(request)
+
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+
+	context = {'items':items, 'order':order, 'cartItems':cartItems}
+	return render(request, 'store/checkout.html', context)
 
 def updateItem(request):
 	data = json.loads(request.body)
@@ -48,3 +56,31 @@ def updateItem(request):
 	if orderItem.quantity <= 0:
 		orderItem.delete()
 	return JsonResponse('Item was updated', safe=False)
+
+def processOrder(request): 
+	data = json.loads(request.body)
+
+	if request.user.is_authenticated:
+		customer = request.user.customerprofile
+		order, created = Order.objects.get_or_create(customer=customer, complete=False)
+	else:
+		customer, order = guestOrder(request, data)
+
+	total = float(data['form']['total'])
+	order.transaction_id = datetime.datetime.now().timestamp()
+
+	# Verify cart total is same in db
+	if total == order.get_cart_total:
+		order.complete = True
+	order.save()
+
+	ShippingAddress.objects.create(
+	customer=customer,
+	order=order,
+	address=data['shipping']['address'],
+	city=data['shipping']['city'],
+	state=data['shipping']['state'],
+	zipcode=data['shipping']['zipcode'],
+	)
+	
+	return JsonResponse('Payment submitted..', safe=False)
