@@ -5,7 +5,7 @@ from PIL import Image
 # Create your models here.
 # Create your models here.
 class CustomerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     first_name = models.CharField(default='defaultuser', max_length=200, null=True)
     email = models.CharField(default='defaultuser@user.com',max_length=200)
