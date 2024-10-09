@@ -6,6 +6,7 @@
 	<div class="col-lg-6">
 		<div class="box-element" id="form-wrapper">
             <form id="form">
+                {% if user.is_authenticated == False %}
                 <div id="user-info">
                     <div class="form-field">
                         <input required class="form-control" type="text" name="name" placeholder="Name..">
@@ -14,6 +15,7 @@
                         <input required class="form-control" type="email" name="email" placeholder="Email..">
                     </div>
                 </div>
+                {% endif %} 
                 
                 <div id="shipping-info">
                     <hr>
@@ -52,16 +54,92 @@
             <hr>
             <h3>Order Summary</h3>
             <hr>
+            {% for item in items %}
             <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{% static 'images/cart.png' %}"></div>
-                <div style="flex:2"><p>Product 1</p></div>
-                <div style="flex:1"><p>$101.99</p></div>
-                <div style="flex:1"><p>x2</p></div>
+                <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+                <div style="flex:2"><p>{{item.product.name}}</p></div>
+                <div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
+                <div style="flex:1"><p>x{{item.quantity}}</p></div>
             </div>
-            <h5>Items:   2</h5>
-            <h5>Total:   $101.99</h5>
+            {% endfor %}
+            <h5>Items:   {{order.get_cart_items}}</h5>
+            <h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5>
         </div>
+        
 	</div>
 </div>
+
+<script type="text/javascript">
+    var shipping = '{{order.shipping}}'
+
+    var form = document.getElementById('form')
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault()
+        console.log('Form Submitted...')
+        document.getElementById('form-button').classList.add("hidden");
+        document.getElementById('payment-info').classList.remove("hidden");
+    })
+    
+    document.getElementById('make-payment').addEventListener('click', function(e){
+        console.log("Payment btn clicked!")
+        submitFormData()
+    })
+
+    
+    var total = '{{order.get_cart_total|floatformat:2}}'
+
+    function submitFormData(){
+	    	console.log('Payment button clicked')
+
+            var userFormData = {
+                'name':null,
+                'email':null,
+                'total':total,
+            }
+
+            var shippingInfo = {
+                'address':null,
+                'city':null,
+                'state':null,
+                'zipcode':null,
+            }
+
+            shippingInfo.address = form.address.value
+            shippingInfo.city = form.city.value
+            shippingInfo.state = form.state.value
+            shippingInfo.zipcode = form.zipcode.value
+            
+
+            if (user == 'AnonymousUser'){
+                userFormData.name = form.name.value
+                userFormData.email = form.email.value
+            }
+
+            console.log('Shipping Info:', shippingInfo)
+            console.log('User Info:', userFormData)
+
+            var url = "/process_order/"
+            fetch(url, {
+                method:'POST',
+                headers:{
+                    'Content-Type':'applicaiton/json',
+                    'X-CSRFToken':csrftoken,
+                }, 
+                body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
+                
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success:', data);
+                alert('Transaction completed'); 
+                
+                cart = {}
+                document.cookie ='cart=' + JSON.stringify(cart) + ";domain=;path=/"
+                window.location.href = "{% url 'store-home' %}"
+
+                })
+	    }
+    </script>
 
 {% endblock content %}
