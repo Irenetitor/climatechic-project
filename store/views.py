@@ -1,5 +1,6 @@
 import datetime
 import json
+import requests
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -8,10 +9,23 @@ from store.utils import cartData, guestOrder
 
 # Create your views here.
 
+# Function to fetch product data from the API
+def fetch_products_from_api():
+	response = requests.get('https://dummyjson.com/products')
+	if response.status_code == 200:
+		return response.json().get('products', [])
+	return []
+
 def store(request):
 	data = cartData(request)
 	cartItems = data['cartItems']
+
+	# Fetch products from the API
+	# products = fetch_products_from_api()
+
+	# Fetch products from the database
 	products = Product.objects.all()
+
 	context = {'products':products,'cartItems':cartItems}
 	return render(request, 'store/store.html', context)
 

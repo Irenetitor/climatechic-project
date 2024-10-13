@@ -1,23 +1,85 @@
 // some scripts
+window.onload = function () {
+    console.log("website is loaded!!");
+    const hamburger = document.querySelector(".hamburger");
 
-// jquery ready start
-$(document).ready(function() {
-	// jQuery code
-    /* ///////////////////////////////////////
-    THESE FOLLOWING SCRIPTS ONLY FOR BASIC USAGE, 
-    For sliders, interactions and other
-    */ ///////////////////////////////////////
-	//////////////////////// Prevent closing from click inside dropdown
-    $(document).on('click', '.dropdown-menu', function (e) {
-      e.stopPropagation();
+    // Enable/Disable mobile nav menu
+    hamburger.addEventListener("click", function () {
+        console.log("clicked");
+        hamburger.classList.toggle("is-active");
+        slideToggle(document.querySelector('.menu-mobile'));
     });
-	//////////////////////// Bootstrap tooltip
-	if($('[data-toggle="tooltip"]').length>0) {  // check if element exists
-		$('[data-toggle="tooltip"]').tooltip()
-	} // end if   
-}); 
-// jquery end
 
+    function slideToggle(element, duration = 400) {
+        if (window.getComputedStyle(element).display === 'none') {
+            return slideDown(element, duration);
+        } else {
+            return slideUp(element, duration);
+        }
+    }
+    
+    function slideUp(element, duration = 400) {
+        element.style.transitionProperty = 'height, margin, padding';
+        element.style.transitionDuration = duration + 'ms';
+        element.style.boxSizing = 'border-box';
+        element.style.height = element.offsetHeight + 'px';
+        element.offsetHeight; // Force repaint
+    
+        element.style.overflow = 'hidden';
+        element.style.height = 0;
+        element.style.paddingTop = 0;
+        element.style.paddingBottom = 0;
+        element.style.marginTop = 0;
+        element.style.marginBottom = 0;
+    
+        window.setTimeout(() => {
+            element.style.display = 'none';
+            element.style.removeProperty('height');
+            element.style.removeProperty('padding-top');
+            element.style.removeProperty('padding-bottom');
+            element.style.removeProperty('margin-top');
+            element.style.removeProperty('margin-bottom');
+            element.style.removeProperty('overflow');
+            element.style.removeProperty('transition-duration');
+            element.style.removeProperty('transition-property');
+        }, duration);
+    }
+    
+    function slideDown(element, duration = 400) {
+        element.style.removeProperty('display');
+        let display = window.getComputedStyle(element).display;
+
+        if (display === 'none') {
+            display = 'block';
+        }
+
+        element.style.display = display;
+        let height = element.offsetHeight;
+        element.style.overflow = 'hidden';
+        element.style.height = 0;
+        element.style.paddingTop = 0;
+        element.style.paddingBottom = 0;
+        element.style.marginTop = 0;
+        element.style.marginBottom = 0;
+        element.offsetHeight; // Force repaint
+        element.style.boxSizing = 'border-box';
+        element.style.transitionProperty = 'height, margin, padding';
+        element.style.transitionDuration = duration + 'ms';
+        element.style.height = height + 'px';
+        element.style.removeProperty('padding-top');
+        element.style.removeProperty('padding-bottom');
+        element.style.removeProperty('margin-top');
+        element.style.removeProperty('margin-bottom');
+
+        window.setTimeout(() => {
+            element.style.removeProperty('height');
+            element.style.removeProperty('overflow');
+            element.style.removeProperty('transition-duration');
+            element.style.removeProperty('transition-property');
+        }, duration);
+    }
+
+}
 
 function validateRegisterForm() {
     const firstNameDOM = document.getElementById('first-name');
