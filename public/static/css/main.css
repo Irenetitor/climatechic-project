@@ -2,6 +2,426 @@ body{
 	background-color: hsl(0, 0%, 98%);
 }
 
+/* new css */
+/*//////////////////////////////////////////////////////////////////
+[ FONT ]*/
+
+@font-face {
+	font-family: Poppins-Regular;
+	src: url('../fonts/Poppins/Poppins-Regular.ttf'); 
+}
+
+@font-face {
+	font-family: Poppins-Medium;
+	src: url('../fonts/Poppins/Poppins-Medium.ttf'); 
+}
+
+/*------------------------------------------------------------------
+[ Bootstrap ]*/
+.container {max-width: 1380px;}
+
+@media (max-width: 1600px) {
+  .container {max-width: 1200px;}
+}
+
+
+/*//////////////////////////////////////////////////////////////////
+[ Header ]*/
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[ Header Desktop ]*/
+
+.container-menu-desktop {
+	height: auto;
+	width: 100%;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+/*==================================================================
+[ Menu ]*/
+
+.wrap-menu-desktop {
+	position: fixed;
+	z-index: 1100;
+	background-color: transparent;
+	width: 100%;
+	height: 84px;
+	top: 40px;
+	left: 0px; 
+  
+	/* -webkit-transition: height 0.3s, background-color 0.3s;
+	-o-transition: height 0.3s, background-color 0.3s;
+	-moz-transition: height 0.3s, background-color 0.3s;
+	transition: height 0.3s, background-color 0.3s; */
+}
+
+/*---------------------------------------------*/
+.limiter-menu-desktop {
+	height: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	background-color: transparent;
+}
+  
+/*------------------------------------------------------------------
+[ Logo ]*/
+.logo {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	height: 65%;
+	margin-right: 55px;
+}
+
+.logo > h2 {
+	text-transform: uppercase;
+	font-size: 2em;
+    font-weight: 900;
+}
+
+.logo > h2 > span {
+    font-weight: 600;
+    font-size: 2rem; 
+}
+
+/*------------------------------------------------------------------
+[ Menu ]*/
+
+.menu-desktop {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	height: 100%;
+  }
+  
+.main-menu {
+	list-style-type: none;
+	margin: 0;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+}
+
+.main-menu > li {
+	display: block;
+	position: relative;
+	padding: 20px 10px 20px 0px;
+	margin: 0px 4px 0px 14px;
+}
+
+.main-menu > li > a {
+	font-family: Poppins-Medium;
+	font-size: 14px;
+	color: #333;
+	padding: 5px 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+}
+
+.main-menu > a ,
+.main-menu > form > a ,
+.main-menu > form > button {
+	font-family: Poppins-Medium;
+	font-size: 14px;
+	color: #333;
+	padding: 5px 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+}
+
+
+/*---------------------------------------------*/
+.main-menu > li:hover > a {
+	text-decoration: none;
+	color: #6c7ae0;
+  }
+  
+  .main-menu > li:hover > .sub-menu {
+	visibility: visible;
+	opacity: 1;
+  }
+  
+
+
+
+/*------------------------------------------------------------------
+[ Icon header ]*/
+
+.wrap-icon-header {
+	flex-grow: 1;
+}
+
+.icon-header-item {
+	position: relative;
+	font-size: 3em;
+	line-height: 1;
+	cursor: pointer;
+}
+
+
+/*---------------------------------------------*/
+.icon-header-noti::after {
+	content: attr(data-notify);
+	font-family: Poppins-Regular;
+	font-size: 12px;
+	color: #fff;
+	line-height: 15px;
+	text-align: center;
+
+	display: block;
+	position: absolute;
+	top: -7px;
+	right: 0;
+	min-width: 15px;
+	height: 15px;
+	padding: 0 3px;
+	background-color: #717fe0;
+}
+
+/*---------------------------------------------*/
+.wrap-header-mobile .wrap-icon-header {
+	flex-grow: unset;	
+}
+
+/*>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[ Header Mobile ]*/
+.wrap-header-mobile {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	align-items: center;
+	height: 70px;
+	background-color: #fff;
+	padding: 15px;
+	display: none;
+  
+	box-shadow: 0 0px 3px 0px rgba(0,0,0,0.2);
+	-moz-box-shadow: 0 0px 3px 0px rgba(0,0,0,0.2);
+	-webkit-box-shadow: 0 0px 3px 0px rgba(0,0,0,0.2);
+	-o-box-shadow: 0 0px 3px 0px rgba(0,0,0,0.2);
+	-ms-box-shadow: 0 0px 3px 0px rgba(0,0,0,0.2);
+  }
+
+  /*------------------------------------------------------------------
+  [ Logo mobile ]*/
+.logo-mobile {
+	display: block;
+	position: relative;
+	height: 80%;
+	padding-right: 25px;
+	-webkit-flex-grow: 1;
+	-moz-flex-grow: 1;
+	flex-grow: 1;
+}
+
+.logo-mobile > h2 {
+	text-transform: uppercase;
+	font-weight: 900;
+}
+
+.logo-mobile > h2 > span {
+	font-size: 1em;
+	font-weight: 600;
+}
+
+/*------------------------------------------------------------------
+/* START - style for hamburger icon */
+.button {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    display: inline-block;
+    color: #fff;
+    font-size:  20px;
+    background-color: rgb(220, 153, 36);
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.hamburger {
+    position: relative;
+    display: block;
+    width: 2.5em;
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: block;
+}
+
+.hamburger .bar {
+    width: 100%;
+    height: 0.3rem;
+    background-color: red;
+    margin: 0.4rem 0px;
+}
+
+.hamburger:before,
+.hamburger:after {
+    content: "";
+    display: block;
+    height: 0.3rem;
+    background-color: red;
+    margin: 0.4rem 0px;
+    transition: 0.4s;
+}
+
+@media (max-width: 1200px) {
+    .hamburger {
+        display: block;
+    }
+}
+
+.hamburger.is-active:before {
+    transform: rotate(-45deg) translate(-6px, 9px);
+}
+
+.hamburger.is-active:after {
+    transform: rotate(45deg) translate(-6px, -9px);
+}
+
+.hamburger.is-active .bar {
+    opacity: 0;
+}
+/* END - style for hamburger icon */
+
+
+/*---------------------------------------------*/
+@media (max-width: 1200px){
+	.wrap-header-mobile {
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: flex;
+	}
+	.container-menu-desktop {display: none;}
+
+	.icon-header-item {
+		font-size: 26px;
+	}
+  }
+
+/*==================================================================
+[ Menu mobile ]*/
+.menu-mobile {
+	width: 100%;
+	background-color: white;
+	display: none;
+  }
+  
+.main-menu-m {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #717fe0;
+}
+
+.main-menu-m > li > a {
+	font-family: Poppins-Medium;
+	font-size: 14px;
+	color: white;
+	line-height: 2.8;
+	padding: 8px 20px 8px 20px;
+}
+
+.main-menu-m > li {
+	color: white;
+	position: relative;
+}
+
+/* .menu-mobile.is-active {
+    left: 0%;
+} */
+
+ 
+
+/*==================================================================
+    - CUSTOM COLOR
+==================================================================*/
+/*[ BTN TEXT ]*/
+.cl0 {color: #fff;}
+.cl1 {color: #717fe0;}
+.cl2 {color: #333;}
+.cl3 {color: #666;}
+.cl4 {color: #999;}
+.cl5 {color: #222;}
+.cl6 {color: #888;}
+.cl7 {color: #b2b2b2;}
+.cl8 {color: #555;}
+.cl9 {color: #aaa;}
+.cl10 {color: #1d1d1d;}
+.cl11 {color: #f9ba48;}
+.cl12 {color: #ccc;}
+
+/*[ Hover ]*/
+.hov-cl0:hover {color: #fff;}
+.hov-bg0:hover {background-color: #fff;}
+.hov-cl1:hover {color: #717fe0;}
+.hov-bg1:hover {background-color: #717fe0;}
+
+/*[ BACKGROUND ]*/
+.bg-none {background-color: transparent;}
+.bg0 {background-color: #fff;}
+.bg1 {background-color: #717fe0;}
+.bg2 {background-color: #e6e6e6;}
+.bg3 {background-color: #222;}
+.bg5 {background-color: rgba(0,0,0,0.5);}
+.bg6 {background-color: #f2f2f2;}
+.bg7 {background-color: #333;}
+.bg8 {background-color: #f3f3f3;}
+.bg9 {background-color: rgba(255,255,255,0.9);}
+
+
+
+/*==================================================================
+    - CUSTOM FONT SIZEs
+==================================================================*/
+.stext-107 {
+	font-family: Poppins-Regular;
+	font-size: 13px;
+	line-height: 1.923;
+}
+
+/*---------------------------------------------*/
+.stext-301 {
+	font-family: Poppins-Regular;
+	font-size: 15px;
+	line-height: 1.6;
+	text-transform: uppercase;
+  }
+  
+
+
+/* new end -------------------------------------------------------------------------------------------------*/
+
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
 }

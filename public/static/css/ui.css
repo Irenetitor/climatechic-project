@@ -1025,36 +1025,7 @@ a[class*='card'] {
   border: none;
 }
 
-/*********************************************************************************************************/
-/*********************************** Start - style for Footer ********************************************/
-/*********************************************************************************************************/
-footer {
-  color:#7a0e06;
-  width: 100%;
-}
 
-footer .container {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-footer .container .icon-grid {
-  display: grid;
-  grid-gap: 2rem;
-  grid-template-columns: repeat(4, auto);
-}
-
-footer .container .icon-grid a {
-  color: inherit;
-  font-size:1rem;
-  text-decoration: none;
-}
-/*********************************************************************************************************/
-/*********************************** End - style for Footer **********************************************/
-/*********************************************************************************************************/
 
 .rounded-circle {
   border-radius: 30% !important; }
