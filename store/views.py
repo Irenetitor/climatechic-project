@@ -8,42 +8,30 @@ from store.models import Order, OrderItem, Product, ShippingAddress
 from store.utils import cartData, guestOrder, get_weather_data
 
 
-# Create your views here.
-
-# Function to fetch product data from the API
-def fetch_products_from_api():
-	response = requests.get('https://dummyjson.com/products')
-	if response.status_code == 200:
-		return response.json().get('products', [])
-	return []
-
 def store(request):
 	data = cartData(request)
 	cartItems = data['cartItems']
 
-	# Fetch products from the API
-	# products = fetch_products_from_api()
-
-	# Fetch products from the database
-	products = Product.objects.all()
+	# Get city from request
+	city = request.GET.get('city', 'Dublin')  # Default to 'Dublin' if no city is provided
 
 	# Fetch weather data
-	city = 'London'
 	weather_data = get_weather_data(city, settings.WEATHER_API_KEY)
-	print (weather_data['main']['temp'])
+	if not weather_data:
+		context = {'products': [], 'cartItems': cartItems, 'city': None, 'error': 'Invalid city name. Please enter a valid city.'}
+		return render(request, 'store/store.html', context)
+
+	temp = weather_data['main']['temp'] if weather_data else 25  # Default to 25 if no weather data
 
 	# Filter products based on weather
-	if weather_data:
-		# temp = weather_data['main']['temp']
-		temp = 25
-		if temp < 10:
-			products = products.filter(category='winter')
-		elif temp < 20:
-			products = products.filter(category='autumn')
-		else:
-			products = products.filter(category='summer')
+	if temp < 10:
+		products = Product.objects.filter(category='winter')
+	elif temp < 20:
+		products = Product.objects.filter(category='autumn')
+	else:
+		products = Product.objects.filter(category='summer')
 
-	context = {'products': products, 'cartItems': cartItems}
+	context = {'products': products, 'cartItems': cartItems, 'city': city}
 	return render(request, 'store/store.html', context)
 
 def cart(request):
@@ -115,3 +103,10 @@ def processOrder(request):
 	)
 	
 	return JsonResponse('Payment submitted..', safe=False)
+
+def about(request):
+	return render(request, 'store/about.html')
+
+def contact(request):
+	context = {}
+	return render(request, 'store/contact.html')

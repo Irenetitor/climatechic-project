@@ -2,6 +2,17 @@
 window.onload = function () {
     console.log("website is loaded!!");
     const hamburger = document.querySelector(".hamburger");
+    const header = document.querySelector('header');
+
+    // Enable/Disable header backgroud
+    window.addEventListener('scroll', function (e) {
+        console.log(window.pageYOffset);
+        if (window.pageYOffset > 100) {
+            header.classList.add('is-scrolling');
+        } else {
+            header.classList.remove('is-scrolling');
+        }
+    });
 
     // Enable/Disable mobile nav menu
     hamburger.addEventListener("click", function () {
@@ -17,21 +28,21 @@ window.onload = function () {
             return slideUp(element, duration);
         }
     }
-    
+
     function slideUp(element, duration = 400) {
         element.style.transitionProperty = 'height, margin, padding';
         element.style.transitionDuration = duration + 'ms';
         element.style.boxSizing = 'border-box';
         element.style.height = element.offsetHeight + 'px';
         element.offsetHeight; // Force repaint
-    
+
         element.style.overflow = 'hidden';
         element.style.height = 0;
         element.style.paddingTop = 0;
         element.style.paddingBottom = 0;
         element.style.marginTop = 0;
         element.style.marginBottom = 0;
-    
+
         window.setTimeout(() => {
             element.style.display = 'none';
             element.style.removeProperty('height');
@@ -44,7 +55,7 @@ window.onload = function () {
             element.style.removeProperty('transition-property');
         }, duration);
     }
-    
+
     function slideDown(element, duration = 400) {
         element.style.removeProperty('display');
         let display = window.getComputedStyle(element).display;
@@ -87,7 +98,7 @@ function validateRegisterForm() {
     const emailDOM = document.getElementById('email');
     const passwordDOM = document.getElementById('password');
     const statusMessageDOM = document.getElementById('status-message');
-  
+
     // Validate first name
     const namePattern = /^[A-Za-z\s]+$/;
     let firstName = firstNameDOM.value;
@@ -100,7 +111,7 @@ function validateRegisterForm() {
         statusMessageDOM.style.display = "block";
         return false;
     }
-  
+
     // Validate last name
     let lastName = lastNameDOM.value;
     if (lastName.trim() === "") {
@@ -112,7 +123,7 @@ function validateRegisterForm() {
         statusMessageDOM.style.display = "block";
         return false;
     }
-  
+
     // Validate email
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     let email = emailDOM.value;
@@ -125,7 +136,7 @@ function validateRegisterForm() {
         statusMessageDOM.style.display = "block";
         return false;
     }
-  
+
     // Validate password
     let password = passwordDOM.value;
     if (password.trim() === "") {
@@ -133,8 +144,103 @@ function validateRegisterForm() {
         statusMessageDOM.style.display = "block";
         return false;
     }
-  
+
     // Hide the status message if validation passes
     statusMessageDOM.style.display = "none";
     return true;
-  }
+}
+
+function validateFeedbackForm() {
+    const name = document.getElementById('name-feedback').value.trim();
+    const email = document.getElementById('email-feedback').value.trim();
+    const feedback = document.getElementById('user-feedback').value.trim();
+    const statusMessage = document.getElementById('status-message');
+
+    // List of valid email providers
+    const validEmailProviders = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com'];
+
+    // Validate name
+    if (name === "") {
+        statusMessage.textContent = "Name is required.";
+        statusMessage.style.display = "block";
+        return false;
+    } else if (!/^[A-Za-z\s]+$/.test(name)) {
+        statusMessage.textContent = "Name can only contain letters and spaces.";
+        statusMessage.style.display = "block";
+        return false;
+    }
+
+    // Validate email
+    if (email === "") {
+        statusMessage.textContent = "Email is required.";
+        statusMessage.style.display = "block";
+        return false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        statusMessage.textContent = "Please enter a valid email address.";
+        statusMessage.style.display = "block";
+        return false;
+    } else {
+        const emailDomain = email.split('@')[1];
+        if (!validEmailProviders.includes(emailDomain)) {
+            statusMessage.textContent = "Please use an email from a valid provider (e.g., gmail.com, yahoo.com).";
+            statusMessage.style.display = "block";
+            return false;
+        }
+    }
+
+    // Validate feedback
+    if (feedback === "") {
+        statusMessage.textContent = "Feedback is required.";
+        statusMessage.style.display = "block";
+        return false;
+    }
+
+    // Show success message if validation passes
+    statusMessage.textContent = "Feedback sent successfully!";
+    statusMessage.classList.remove('alert-danger');
+    statusMessage.classList.add('alert-success');
+    statusMessage.style.display = "block";
+    return true;
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('cityForm').addEventListener('submit', function (event) {
+        var cityInput = document.getElementById('city').value.trim();
+        if (cityInput === '') {
+            alert('Please enter a city name.');
+            event.preventDefault();
+            return;
+        }
+
+        // Validate city name using GeoDB Cities API
+        fetch(`https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${cityInput}`, {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '312e2b8aadmshbb6580976f64bc5p18220bjsn57589014f720',
+                'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data.length === 0) {
+                    alert('Please enter a valid city name.');
+                    event.preventDefault();
+                } else {
+                    // City is valid, allow form submission
+                    document.getElementById('cityForm').submit();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while validating the city name.');
+                event.preventDefault();
+            });
+    });
+
+    document.getElementById('resetButton').addEventListener('click', function () {
+        document.getElementById('cityForm').reset();
+        var resetUrl = this.getAttribute('data-url');
+        window.location.href = resetUrl;
+    });
+
+});
