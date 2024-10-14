@@ -15,12 +15,6 @@
                     <ul class="main-menu">
                         <li><a href="{% url 'store-home' %}">Home</a></li>
                         <li><a href="{% url 'store-home' %}">Shop</a></li>
-
-                        {% if user.is_authenticated %}
-                        <li><a href="{% url 'menu1' %}">Menu 1</a></li>
-                        <li><a href="{% url 'menu2' %}">Menu 2</a></li>
-                        {% endif %}
-
                         <li><a href="{% url 'store-about' %}">About</a></li>
                         <li><a href="{% url 'store-about' %}">Contact</a></li>
                     </ul>
@@ -122,12 +116,6 @@
 
             <li><a href="{% url 'store-home' %}">Home</a></li>
             <li><a href="{% url 'store-home' %}">Shop</a></li>
-
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'menu1' %}">Menu 1</a></li>
-                <li><a href="{% url 'menu2' %}">Menu 2</a></li>
-            {% endif %}
-
             <li><a href="{% url 'store-about' %}">About</a></li>
             <li><a href="{% url 'store-about' %}">Contact</a></li>
         </ul>
