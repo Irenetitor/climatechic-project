@@ -6,7 +6,7 @@
 <div align="center">
     <span style="font-size:32px">
         <a href="https://climatechic-project.onrender.com" style="text-decoration: none;">
-        ✩▁▂▃▅▆▓▒░<span style="background: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red)">EpicureanYumHub</span>░▒▓▆▅▃▂▁✩</a>
+        ✩▁▂▃▅▆▓▒░<span style="background: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red)">ClimateChic</span>░▒▓▆▅▃▂▁✩</a>
     </span>
 </div>
 
@@ -33,7 +33,7 @@
 
 
 ## Deployment steps on Render.com
-Use this pdf for step by step instruction - Deployment Steps (https://github.com/Irenetitor/climatechic-project/blob/main/Deployment_Steps.pdf)
+Use this pdf for step by step instruction - Deployment Steps (https://github.com/Irenetitor/climatechic-project/blob/main/docs/Deployment_Steps.pdf)
 
 ## Instructions to access
 
