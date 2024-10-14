@@ -7114,6 +7114,10 @@ button.bg-gray-light:focus {
 .my-5 {
   margin-top: 3rem !important; }
 
+.mt-9,
+.my-9 {
+  margin-top: 9rem !important; }
+
 .mr-5,
 .mx-5 {
   margin-right: 3rem !important; }
