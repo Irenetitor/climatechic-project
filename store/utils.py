@@ -1,4 +1,5 @@
 import json
+import requests
 
 from store.models import Order, OrderItem, Product
 from users.models import CustomerProfile
@@ -37,7 +38,7 @@ def cookieCart(request):
                 items.append(item)
         except:
              pass
-			
+
     return {'cartItems':cartItems ,'order':order, 'items':items}
 
 def cartData(request):
@@ -53,31 +54,37 @@ def cartData(request):
         items = cookieData['items']
     return {'cartItems':cartItems ,'order':order, 'items':items}
 
-
 def guestOrder(request, data):
-	name = data['form']['name']
-	email = data['form']['email']
+    name = data['form']['name']
+    email = data['form']['email']
 
-	cookieData = cookieCart(request)
-	items = cookieData['items']
+    cookieData = cookieCart(request)
+    items = cookieData['items']
 
     # Create a customer profile for guest user
-	customer, created = CustomerProfile.objects.get_or_create(
-			email=email,
-			)
-	customer.name = name
-	customer.save()
+    customer, created = CustomerProfile.objects.get_or_create(
+            email=email,
+            )
+    customer.name = name
+    customer.save()
 
-	order = Order.objects.create(
-		customer=customer,
-		complete=False,
-		)
+    order = Order.objects.create(
+        customer=customer,
+        complete=False,
+        )
 
-	for item in items:
-		product = Product.objects.get(id=item['id'])
-		orderItem = OrderItem.objects.create(
-			product=product,
-			order=order,
-			quantity=item['quantity'],
-		)
-	return customer, order
+    for item in items:
+        product = Product.objects.get(id=item['id'])
+        orderItem = OrderItem.objects.create(
+            product=product,
+            order=order,
+            quantity=item['quantity'],
+        )
+    return customer, order
+
+def get_weather_data(city, api_key):
+    url = f'http://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    return None
