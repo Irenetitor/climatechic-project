@@ -3,9 +3,10 @@ import json
 import requests
 from django.http import JsonResponse
 from django.shortcuts import render
-
+from django.conf import settings
 from store.models import Order, OrderItem, Product, ShippingAddress
-from store.utils import cartData, guestOrder
+from store.utils import cartData, guestOrder, get_weather_data
+
 
 # Create your views here.
 
@@ -26,7 +27,23 @@ def store(request):
 	# Fetch products from the database
 	products = Product.objects.all()
 
-	context = {'products':products,'cartItems':cartItems}
+	# Fetch weather data
+	city = 'London'
+	weather_data = get_weather_data(city, settings.WEATHER_API_KEY)
+	print (weather_data['main']['temp'])
+
+	# Filter products based on weather
+	if weather_data:
+		# temp = weather_data['main']['temp']
+		temp = 25
+		if temp < 10:
+			products = products.filter(category='winter')
+		elif temp < 20:
+			products = products.filter(category='autumn')
+		else:
+			products = products.filter(category='summer')
+
+	context = {'products': products, 'cartItems': cartItems}
 	return render(request, 'store/store.html', context)
 
 def cart(request):
