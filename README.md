@@ -31,7 +31,29 @@
 
 ## Features
 
+- **Django Management Command**
 
+In this project, a Django management command is used to initialize the database with product data fetched from an external product API. This command automates the process of populating the database.
+
+- **Cookies for Guest Cart**
+
+The project uses cookies to manage the shopping cart for guest users. This allows users who are not logged in to add products to their cart and retain this information across sessions, providing a seamless shopping experience.
+
+- **Reusable Headers and Footers**
+
+The project employs reusable headers and footers across different HTML pages. This is achieved by creating separate template files for the header and footer and including them in other templates using Django's template inheritance and inclusion tags.
+
+- **Mobile Navigation Menu Slider**
+
+A mobile navigation menu slider is implemented to enhance the user experience on mobile devices. This feature allows users to easily navigate through the website using a sliding menu that is optimized for touch interactions.
+
+- **JavaScript-based Form Validations**
+
+JavaScript is used for client-side form validations to provide immediate feedback to users. This ensures that form inputs meet the required criteria before submission, improving the overall user experience and reducing server-side validation errors.
+
+- **Usage of Environment Variables**
+
+Environment variables are used to manage sensitive information and configuration settings securely. Tools like `python-decouple` are employed to read these variables from a `.env` file, keeping them out of the source code and enhancing security.
 
 # Database design
 <img src="docs/img.png" alt="img" width="700" height="auto">
