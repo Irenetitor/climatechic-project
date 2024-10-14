@@ -32,6 +32,27 @@
 ## Features
 
 
+
+# Database design
+<img src="docs/img.png" alt="img" width="700" height="auto">
+
+This project will include six models. Here’s a brief overview of each:
+
+
+- **USER**: Utilizes Django’s built-in user model, creating an instance for every registered customer.
+
+- **CUSTOMER**: Each customer will have a Customer model in addition to the User model, maintaining a one-to-one relationship with the User model (OneToOneField).
+
+- **PRODUCT**: Represents the different types of products available in the store.
+ 
+- **ORDER**: This model captures transactions, whether completed or pending. It includes details like transaction ID, completion date, and order status. It is a child of the Customer model and a parent to Order Items.
+ 
+- **ORDERITEM**: Represents individual items within an order. For instance, a shopping cart may contain multiple items, all part of a single order. Thus, the OrderItem model is a child of both the Product and Order models.
+ 
+- **SHIPPING**: Not all orders require shipping information. For orders with physical products that need shipping, an instance of the Shipping model will be created to specify the delivery address. The Shipping model is a child of the Order model when necessary.
+
+
+
 ## Deployment steps on Render.com
 Use this pdf for step by step instruction - Deployment Steps (https://github.com/Irenetitor/climatechic-project/blob/main/docs/Deployment_Steps.pdf)
 
